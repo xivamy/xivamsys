@@ -17,14 +17,14 @@ public class IvExceptionInterceptor extends JSONInterceptor
     private static final long serialVersionUID = 5090461961591490562L;
 
     @Override
-    public String intercept(ActionInvocation actioninvocation) throws Exception
+    public String intercept(ActionInvocation vocation) throws Exception
     {
         HttpServletRequest request = ServletActionContext.getRequest();
         
         String result = "exception";
         try
         {
-            result = actioninvocation.invoke();
+            result = vocation.invoke();
         }
         catch(Exception e)
         {
