@@ -52,7 +52,6 @@ public class IvFileSearch
         if (searcher != null)
         {
             docs = searcher.search(query, 25);// 可以分页查询
-
             ScoreDoc scoreDocs[] = docs.scoreDocs;
 
             for (int i = 0; i < docs.totalHits; i++)
