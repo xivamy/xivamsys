@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+    <constant name="struts.action.extension" value="action"></constant><!-- 这样可以和Servlet共存 -->
+    
+    <package name="json-base" namespace="/" extends="json-default">
+        <interceptors>
+            <interceptor name="exceptionInterceptor" class="com.xiva.action.common.interceptor.IvExceptionInterceptor"/>
+        	<interceptor-stack name="exceptionStack">
+        		<interceptor-ref name="defaultStack"></interceptor-ref>
+        		<interceptor-ref name="exceptionInterceptor"></interceptor-ref>
+        	</interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="exceptionStack"/>
+        <global-results> 
+        	<result name="error" >/common/error.jsp</result>
+        	<result name="msgErr">/common/error.jsp</result>
+        	<result name="exception">/common/error.jsp</result>
+        </global-results>
+        
+        <global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="msgErr" exception="com.xiva.exception.IvMsgException" /> 
+		</global-exception-mappings>
+        
+    </package>
+    
+    <package name="base" namespace="/base" extends="json-default">
+    	
+        <action name="uploadbook" class="com.xiva.action.common.UploadFileAction"
+        	method="uploadBook"></action>
+       	<action name="logout" class="com.xiva.action.user.LoginAction"
+        	method="logout">
+        	<result name="success">/main.jsp</result>	
+        </action>
+        <action name="loadDictCode" class="com.xiva.action.common.LoadDataAction"
+        	method="loadDictCode">
+        	<result type="json">
+        	</result>
+        </action>
+        
+    </package>
+    
+    <package name="user" namespace="/user" extends="json-base">
+        <action name="login" class="com.xiva.action.user.LoginAction"
+        	method="login">
+        	<result type="json">
+        		<param name="includeProperties">success,msg</param>
+        	</result>
+        </action>
+        <action name="userInfoList" class="com.xiva.action.user.ManageUserInfoAction"
+        	method="loadUserList">
+        </action>
+        <action name="adduserinfo" class="com.xiva.action.user.ManageUserInfoAction"
+        	method="addUser">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="delSelUser" class="com.xiva.action.user.ManageUserInfoAction"
+        	method="delUser">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="getUserInfo" class="com.xiva.action.user.ManageUserInfoAction"
+        	method="getUserInfo">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="modifyUserInfo" class="com.xiva.action.user.ManageUserInfoAction"
+        	method="modifyUserInfo">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="exportZip" class="com.xiva.action.user.ExportUserInfo"
+        	method="exportZipFile">
+        	<result name="success">/common/blank.jsp</result>
+        </action>
+    </package>
+    
+    <package name="org" namespace="/org" extends="json-base">
+    	
+    	<action name="orgtree" class="com.xiva.action.org.ManageOrgAction"
+        	method="getOrgTree">
+        	<result type="json">
+        		<param name="includeProperties">success,msg</param>
+        	</result>
+        </action>
+    	
+    	<action name="orgcomb" class="com.xiva.action.org.ManageOrgAction"
+        	method="getChildOrg">
+        	<result type="json">
+        		<param name="includeProperties">success,msg</param>
+        	</result>
+        </action>
+        
+    	<action name="orgInfoList" class="com.xiva.action.org.ManageOrgAction"
+        	method="loadOrgList">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="addorg" class="com.xiva.action.org.ManageOrgAction"
+        	method="addOrg">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="saveTreePath" class="com.xiva.action.org.ManageOrgAction"
+        	method="saveTreePath">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="removeTreePath" class="com.xiva.action.org.ManageOrgAction"
+        	method="removeTreePath">
+        	<result type="json">
+        	</result>
+        </action>
+        
+        <action name="delSelOrg" class="com.xiva.action.org.ManageOrgAction"
+        	method="delOrg">
+        </action>
+        
+        <action name="getOrgInfo"  class="com.xiva.action.org.ManageOrgAction"
+        	method="getOrgInfo">
+        </action>
+        
+        <action name="modifyOrg"  class="com.xiva.action.org.ManageOrgAction"
+        	method="modifyOrg">
+        </action>
+        
+    </package>
+    
+    
+    
+</struts>

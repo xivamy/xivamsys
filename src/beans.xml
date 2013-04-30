@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <bean id="dataSource"  
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost/blogsysdb" />  
+        <property name="username" value="blogdb" />  
+        <property name="password" value="blogdb" />  
+    </bean>
+    
+	<bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <!--property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="MYSQL" />
+                <property name="showSql" value="true" />
+            </bean>
+        </property-->
+        <property name="persistenceUnitName" value="blogdbpu" /> 
+    </bean>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean id="transactionManager"  
+        class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="entityManagerFactory" ref="entityManagerFactory" />  
+    </bean>
+    
+    <bean id="springUtils" class="com.xiva.common.util.ServerLocator" />
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+        	<tx:method name="*" read-only="true" rollback-for="com.xiva.exception.IvMsgException"/>
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="*" read-only="true"/>
+		</tx:attributes>
+    </tx:advice>
+    
+    <aop:config>  
+        <aop:pointcut id="allManagerMethod"  
+            expression="execution(* com.xiva.dao.*.*(..))" />  
+        <aop:advisor pointcut-ref="allManagerMethod" advice-ref="txAdvice" />  
+    </aop:config>  
+    
+	<context:annotation-config />
+  	<!-- services -->
+  	<!-- more bean definitions for services go here -->
+  	<context:component-scan base-package="com.xiva"/>
+
+</beans>

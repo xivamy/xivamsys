@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-definition xmlns="urn:jbpm.org:jpdl-4.0" name="Helloworld">
+	<start-state>
+		<transition to='s' />
+	</start-state>
+	<state name='s'>
+		<transition to='end' />
+	</state>
+	<end-state name='end' />
+</process-definition>

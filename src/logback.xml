@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- debug为true时，在控制台输出logback内部调试信息，设为false提高效率 -->
+<configuration debug="false" scan="true" scanPeriod="120 seconds">
+  
+  <!-- 引入的properties文件 -->
+  <property resource="prop4logback.properties" />
+  
+  <!-- 配置DB相关信息        使用到了c3p0缓冲池，能提高日志写入效率 -->
+  <!--  appender name="db" class="ch.qos.logback.classic.db.DBAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${log.level.debug}</level>
+    </filter>
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+      <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+      <driverClass>${db.driverClass}</driverClass>
+      <url>${db.url}</url>
+      <user>${db.user}</user>
+      <password>${db.password}</password>
+      </dataSource>
+    </connectionSource>
+  </appender>-->
+  
+  <!-- 配置控制台输出相关信息 -->
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${log.level.debug}</level>
+    </filter>
+    <encoder>
+      <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- logger优先级高于root，可以配置多个；name是包名或者类路径名 
+  <logger name="com.edocom.bayonet.dao" level="info">
+      <appender-ref ref="db"/>
+  </logger>-->
+  
+  <logger name="org.hibernate.SQL" level="INFO" />
+   
+  <!-- <logger name="org.springframework.ui.freemarker" level="DEBUG" />  
+  <logger name="java.sql.PreparedStatement" level="DEBUG" />
+  下面配置一些第三方包的日志过滤级别，用于避免刷屏  
+  
+    <logger name="org.hibernate" level="WARN" />  
+    <logger name="org.springframework" level="WARN" />  
+    <logger name="com.opensymphony" level="WARN" />  
+    <logger name="org.apache" level="WARN" />  
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  
+        level="TRACE" />  
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  
+        level="DEBUG" />  
+    <logger name="org.hibernate.SQL" level="DEBUG" />  
+    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />  
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />  
+  -->
+  
+  <root  level="debug">
+    <appender-ref ref="stdout"/>
+  </root>
+</configuration>

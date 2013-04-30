@@ -1,0 +1,166 @@
+@CHARSET "UTF-8";
+
+/* 新增按钮图片 */
+.btnIconAdd{
+	background-image:url(../spark/resources/images/nform/add.png) !important;
+}
+/* 编辑按钮图片 */
+.btnIconEdit{
+	background-image:url(../spark/resources/images/nform/edit.png) !important;
+}
+/*初始化图片*/
+.btnIconInit{
+	background-image:url(../spark/resources/images/nform/wrench.png) !important;
+}
+/*批量相关的图片*/
+.btnIconBatch{
+	background-image:url(../spark/resources/images/nform/stack.png) !important;
+}
+/* 更新版本按钮图片 */
+.btnIconUpgrade{
+	background-image:url(../spark/resources/images/nform/world.png) !important;
+}
+/* 删除按钮图片 */
+.btnIconDel{
+	background-image:url(../spark/resources/images/nform/delete.png) !important;
+}
+/* 作废按钮图片 */
+.btnIconDepose{
+	background-image:url(../spark/resources/images/table/table_row_delete.png) !important;
+}
+/* 附件按钮图片 */
+.btnIconAcc{
+	background-image:url(../spark/resources/images/nform/database.png) !important;
+}
+/*处理按钮图片*/
+.btnIconDeal{
+	background-image:url(../spark/resources/jsepc/toolicon/tools_dispose.gif) !important;
+}
+/* 查看按钮图片 */
+.btnIconView{
+	background-image:url(../spark/resources/images/nform/view.png) !important;
+}
+/* 刷新按钮图片 */
+.btnIconRefresh{
+	background-image:url(../spark/resources/images/operate/refresh.png) !important;
+}
+/* 拷贝按钮图片 */
+.btnIconCopy{
+	background-image:url(../spark/resources/images/nform/copy.png) !important;
+}
+/* 剪切按钮图片 */
+.btnIconCut{
+	background-image:url(../spark/resources/images/operate/cut.png) !important;
+}
+/* 粘帖按钮图片 */
+.btnIconPaste{
+	background-image:url(../spark/resources/images/nform/paste.png) !important;
+}
+/* 打印按钮图片 */
+.btnIconPrint{
+	background-image:url(../spark/resources/images/operate/print.png) !important;
+}
+/* 导出Excel按钮图片 */
+.btnIconExcel{
+	background-image:url(../spark/resources/images/nform/excel.png) !important;
+}
+/* 导出Pdf按钮图片 */
+.btnIconPdf{
+	background-image:url(../spark/resources/images/nform/acrobat.png) !important;
+}
+/* 导出Word按钮图片 */
+.btnIconWord{
+	background-image:url(../spark/resources/images/nform/word.png) !important;
+}
+/* 导入按钮图片 */
+.btnIconImport{
+	background-image:url(../spark/resources/images/nform/go.png) !important;
+}
+/* 查找按钮图片 */
+.btnIconFind{
+	background-image:url(../spark/resources/images/nform/find.png) !important;
+}
+/* 保存按钮图片 */
+.btnIconSave{
+	background-image:url(../spark/resources/images/operate/save.png) !important;
+}
+/* 保存并继续按钮图片 */
+.btnIconMSave{
+	background-image:url(../spark/resources/images/operate/msave.png) !important;
+}
+/* 关闭按钮图片 */
+.btnIconClose{
+	background-image:url(../spark/resources/images/operate/cancel.png) !important;
+}
+/* 确定按钮图片 */
+.btnIconYes{
+	background-image:url(../spark/resources/images/operate/accept.png) !important;
+}
+/* 提交按钮图片 */
+.btnIconSubmit{
+	background-image:url(../spark/resources/images/arrow/arrow_turn_up.png) !important;
+}
+/* 审批按钮图片 */
+.btnIconCheck{
+	background-image:url(../spark/resources/images/nform/paint.png) !important;
+}
+/* 接受(通过)按钮图片 */
+.btnIconAccept{
+	background-image:url(../spark/resources/images/arrow/arrow_pass.png) !important;
+}
+/* 驳回按钮图片 */
+.btnIconReject{
+	background-image:url(../spark/resources/images/arrow/arrow_turn_back.png) !important;
+}
+/* 排序按钮图片 */
+.btnIconSort{
+	background-image:url(../image/btn/sort-asc.gif) !important;
+}
+/* 升序按钮图片 */
+.btnIconAsc{
+	background-image:url(../image/btn/sort-asc.gif) !important;
+}
+/* 降序按钮图片 */
+.btnIconDesc{
+	background-image:url(../image/btn/sort-desc.gif) !important;
+}
+/* 统计按钮图片 */
+.btnIconStat{
+	background-image:url(../spark/resources/images/chart/chart_curve.png) !important;
+}
+/* 汇总按钮图片 */
+.btnIconGather{
+	background-image:url(../spark/resources/images/chart/chart_organisation.png) !important;
+}
+/* 合并按钮图片 */
+.btnIconJoin{
+	background-image:url(../spark/resources/images/arrow/arrow_join.png) !important;
+}
+/* 拆分按钮图片 */
+.btnIconDivide{
+	background-image:url(../spark/resources/images/arrow/arrow_divide.png) !important;
+}
+/* 交换按钮图片 */
+.btnIconSwitch{
+	background-image:url(../spark/resources/images/arrow/arrow_switch.png) !important;
+}
+/* 继承按钮图片 */
+.btnIconExtend{
+	background-image:url(../spark/resources/images/table/table_multiple.png) !important;
+}
+/* 帮助按钮图片 */
+.btnIconHelp{
+	background-image:url(../spark/resources/images/operate/help.png) !important;
+}
+/* 信息按钮图片 */
+.btnIconInfo{
+	background-image:url(../spark/resources/images/operate/information.png) !important;
+}
+/* 惊叹按钮图片 */
+.btnIconExclam{
+	background-image:url(../spark/resources/images/operate/exclamation.png) !important;
+}
+/* 停止按钮图片 */
+.btnIconStop{
+	background-image:url(../spark/resources/images/operate/stop.png) !important;
+}

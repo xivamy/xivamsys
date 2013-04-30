@@ -1,0 +1,53 @@
+{ 
+    "items": [ 
+        { 
+            "UserName": "李彦宏", 
+            "Sex": "男", 
+            "Age":25,
+            "XueHao":00001,
+            "BanJi":"一班"
+        }, 
+        { 
+            "UserName": "马云", 
+            "Sex": "男", 
+            "Age":31,
+            "XueHao":00002,
+            "BanJi":"二班"
+        },
+        { 
+            "UserName": "张朝阳", 
+            "Sex": "男", 
+            "Age":30,
+            "XueHao":00003,
+            "BanJi":"一班"
+        },
+        { 
+            "UserName": "朱俊", 
+            "Sex": "男", 
+            "Age":28,
+            "XueHao":00004,
+            "BanJi":"一班"
+        },
+        { 
+            "UserName": "丁磊", 
+            "Sex": "男", 
+            "Age":29,
+            "XueHao":00005,
+            "BanJi":"二班"
+        },
+        { 
+            "UserName": "李国军", 
+            "Sex": "男", 
+            "Age":30,
+            "XueHao":00006,
+            "BanJi":"二班"
+        },
+        { 
+            "UserName": "王志宝", 
+            "Sex": "男", 
+            "Age":25,
+            "XueHao":00007,
+            "BanJi":"一班"
+        }
+    ] 
+} 
