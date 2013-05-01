@@ -17,37 +17,40 @@ public class ExportUserInfo extends BasicAction
     private static final long serialVersionUID = 1L;
 
     private String userName;
-    
 
-    
     public String exportZipFile() throws IOException
     {
         response.reset();
         response.setContentType("application/zip");
-        
+
         String path = "userInfo.zip";
         String filename = path.substring(path.lastIndexOf("\\") + 1);
-        response.setHeader("content-disposition", "attachment;filename="
-                + URLEncoder.encode(filename, "UTF-8"));
-        
+        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+
         OutputStream out = null;
-        try {
+        try
+        {
             out = response.getOutputStream();// 输出流
-            
-            ZipOutputStream zos = new ZipOutputStream(response
-                    .getOutputStream());
+
+            ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
 
             zos.putNextEntry(new ZipEntry("file.txt"));
             zos.write("Xiva aaabbbuser data".getBytes());
             zos.closeEntry();
             zos.flush();
             zos.close();
-        } finally {
+        }
+        finally
+        {
 
-            if (out != null) {
-                try {
+            if (out != null)
+            {
+                try
+                {
                     out.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -65,5 +68,5 @@ public class ExportUserInfo extends BasicAction
     {
         this.userName = userName;
     }
-    
+
 }
