@@ -134,5 +134,4 @@ public class IvResource extends BaseEntity
         this.reserve3 = reserve3;
     }
     
-    
 }
