@@ -202,6 +202,37 @@ public class Org extends BaseEntity implements Comparable<Org>
         this.updateTime = updateTime;
     }
 
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean isEql = false;
+        if (obj instanceof Org)
+        {
+            Org org = (Org) obj;
+            if (this.compareTo(org) == 0)
+            {
+                isEql = true;
+            }
+            else
+            {
+                isEql = false;
+            }
+        }
+        else
+        {
+            isEql = false;
+        }
+        
+        return isEql;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return sysId.hashCode();
+    }
+
     @Override
     public int compareTo(Org o)
     {

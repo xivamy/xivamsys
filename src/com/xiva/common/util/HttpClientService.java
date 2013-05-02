@@ -29,8 +29,8 @@ import com.xiva.exception.IvMsgException;
 
 /**
  * 
- * HttpClient 服务类
- * 主要负责发送http请求
+ * HttpClient 服务类 主要负责发送http请求
+ * 
  * @author xiva
  * @version [版本号, 2013-4-30]
  * @see [相关类/方法]
@@ -44,23 +44,21 @@ public class HttpClientService
     private HttpClientService()
     {
         httpClient = new DefaultHttpClient();
-        
-        if(httpClient instanceof DefaultHttpClient)
+
+        ((DefaultHttpClient) httpClient).setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy()
         {
-            ((DefaultHttpClient) httpClient).setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy() {
-                @Override
-                public long getKeepAliveDuration(
-                        HttpResponse response,
-                        HttpContext context) {
-                    long keepAlive = super.getKeepAliveDuration(response, context);
-                    if (keepAlive == -1) {
-                        keepAlive = 5000;// 会话保持时长
-                    }
-                    return keepAlive;
+            @Override
+            public long getKeepAliveDuration(HttpResponse response, HttpContext context)
+            {
+                long keepAlive = super.getKeepAliveDuration(response, context);
+                if (keepAlive == -1)
+                {
+                    keepAlive = 5000;// 会话保持时长
                 }
-                
-            });
-        }
+                return keepAlive;
+            }
+
+        });
     }
 
     public static HttpClientService getInstance(boolean useHttps)
@@ -77,7 +75,7 @@ public class HttpClientService
 
     private void useHttpsRequest()
     {
-        
+
     }
 
     private void setTimeout()
@@ -95,7 +93,7 @@ public class HttpClientService
     public IvResponse httpGetRequest(String url, Map<String, String> params)
     {
         IvResponse ivResponse = new IvResponse();
-        
+
         URIBuilder builder = new URIBuilder();
         builder.setPath(url);
         URI uri = null;
@@ -103,20 +101,20 @@ public class HttpClientService
         {
             if (params != null && params.size() > 0)
             {
-                for (Entry<String, String> entry :params.entrySet())
+                for (Entry<String, String> entry : params.entrySet())
                 {
                     builder.setParameter(entry.getKey(), entry.getValue());
                 }
             }
-            
+
             uri = builder.build();
-            
+
         }
         catch (URISyntaxException e1)
         {
             throw new IvMsgException(IvExceptionCode.SYS_ERROR);
         }
-        
+
         HttpGet httpGet = new HttpGet(uri);
         HttpResponse httpRes = null;
         try
@@ -140,11 +138,11 @@ public class HttpClientService
         if (params != null && params.size() > 0)
         {
             List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-            for (Entry<String, String> entry :params.entrySet())
+            for (Entry<String, String> entry : params.entrySet())
             {
                 formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
-            
+
             try
             {
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
@@ -155,7 +153,7 @@ public class HttpClientService
                 throw new IvMsgException(IvExceptionCode.SYS_ERROR);
             }
         }
-        
+
         HttpResponse httpRes = null;
         try
         {

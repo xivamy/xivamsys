@@ -58,7 +58,7 @@ public class ManageOrgAction extends BasicAction
     private Integer orgId;
 
     @Autowired
-    private OrgService orgService;
+    private transient OrgService orgService;
 
     @SuppressWarnings("unchecked")
     public void getOrgTree() throws IOException
@@ -218,10 +218,11 @@ public class ManageOrgAction extends BasicAction
         cfg.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor());
         
         JSONObject jsonObj = new JSONObject();
-        Integer ordInt = Integer.valueOf(orgId);
+        Integer ordInt = null;
         
         if (orgId != null)
         {
+            ordInt = Integer.valueOf(orgId);
             BusinessResponse response = orgService.getOrgByOrgId(ordInt);
             Org org = (Org)response.getAttribute(CommonConstant.RESULT);
             

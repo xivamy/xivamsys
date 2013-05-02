@@ -26,9 +26,9 @@ public class BasicAction extends ActionSupport implements ServletRequestAware, S
     
     protected static final String FAILURE = "failure";
     
-    protected HttpServletRequest request;
+    protected transient HttpServletRequest request;
     
-    protected HttpServletResponse response;
+    protected transient HttpServletResponse response;
     
     protected int start;
     

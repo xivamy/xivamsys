@@ -47,7 +47,7 @@ public class ManageUserInfoAction extends BasicAction
     private IvUserBasicVo userBasicVo;
     
     @Autowired
-    private UserService userService;
+    private transient UserService userService;
 
     @SuppressWarnings("unchecked")
     public void loadUserList() throws IOException

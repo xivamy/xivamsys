@@ -32,10 +32,10 @@ public class LoginAction extends BasicAction
     private boolean success;
 
     @Autowired
-    private UserService userService;
+    private transient UserService userService;
 
     @Autowired
-    private UserLogService userLogService;
+    private transient UserLogService userLogService;
 
     public String getUserName()
     {
