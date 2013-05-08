@@ -3,7 +3,7 @@ package com.xiva.test;
 import com.xiva.common.IvExceptionCode;
 import com.xiva.exception.IvMsgException;
 
-public class TestRException
+public class TestRExceCode
 {
 
     public static void main(String[] args)
