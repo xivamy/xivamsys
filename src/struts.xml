@@ -136,6 +136,14 @@
         	method="modifyOrg">
         </action>
         
+        <action name="getAllOrgTree"  class="com.xiva.action.org.ManageOrgAction"
+        	method="getAllOrgTree">
+        </action>
+        
+        <action name="getEasyUITree"  class="com.xiva.action.org.ManageOrgAction"
+        	method="getEasyUITree">
+        </action>
+        
     </package>
     
     

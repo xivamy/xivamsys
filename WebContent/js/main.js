@@ -145,6 +145,7 @@ Ext.onReady(function() {
 	        {name: 'text',  type: 'string'}
 	    ]
 	});
+	
 	var userManageTree = Ext.create('Ext.tree.Panel',{ 
 	    minWidth: 135,
 	    maxWidth: 200,
@@ -219,6 +220,50 @@ Ext.onReady(function() {
 		}
 	});
 
+	
+	var authorityTree = Ext.create('Ext.tree.Panel',{ 
+	    minWidth: 135,
+	    maxWidth: 200,
+	    border : false,
+	    rootVisible: false,
+	    store : Ext.create('Ext.data.TreeStore', {
+	    	model: 'ctreemodel',
+			root : {
+	        	rootVisible : false,
+				expanded : true,
+				children : [ {
+					id : '1',
+					text : "系统资源管理",
+					url:xiva.webContextRoot+'/iv_service/maintainuser.jsp',
+					leaf : true
+				}]
+			}
+	    }),
+	    listeners : {
+			'itemclick' : function(view,re){
+				
+				if (re.data.leaf != true) {
+					return;
+				}
+				var tabId = 'tab-' + re.data.id;
+				if (Ext.getCmp(tabId)) {
+					tabs.setActiveTab(tabId);
+					return
+				}
+				var iframePanel = new Ext.Panel({
+							id : tabId,
+							title : re.data.text,
+							layout : 'fit',
+							items : [{
+							        	 html : "<iframe scrolling='no' frameborder='0' marginwidth='0' marginheight='0' id='ge'  width=100% height=100% src='"+re.data.url +"' > <div id='demo'></div></iframe>"
+							         }],
+							closable : true
+						});
+				tabs.add(iframePanel).show();
+			}
+		}
+	});
+	
 
 	var viewport = new Ext.Viewport({
 				layout : 'border',
@@ -248,7 +293,8 @@ Ext.onReady(function() {
 									},{
 										title : '权限管理',
 										border : false,
-										iconCls : 'settings'
+										iconCls : 'settings',
+										items : [authorityTree]
 									},{
 										title : '系统参数',
 										border : false,

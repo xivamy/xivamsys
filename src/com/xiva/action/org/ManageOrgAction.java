@@ -21,6 +21,7 @@ import com.xiva.action.common.DateJsonValueProcessor;
 import com.xiva.action.common.ExtTreeVO;
 import com.xiva.action.user.ManageUserInfoAction;
 import com.xiva.action.util.RequestParaUtil;
+import com.xiva.action.vo.IvOrgTreeVo;
 import com.xiva.common.BusinessResponse;
 import com.xiva.common.CommonConstant;
 import com.xiva.common.IvExceptionCode;
@@ -54,7 +55,7 @@ public class ManageOrgAction extends BasicAction
     private String treePath;
 
     private String orgIds;
-    
+
     private Integer orgId;
 
     @Autowired
@@ -63,7 +64,6 @@ public class ManageOrgAction extends BasicAction
     @SuppressWarnings("unchecked")
     public void getOrgTree() throws IOException
     {
-
         log.info("getOrgTree start");
         Integer parentId = Integer.valueOf(0);
         if (StringUtils.isNotEmpty(node))
@@ -145,7 +145,6 @@ public class ManageOrgAction extends BasicAction
     @SuppressWarnings("unchecked")
     public void loadOrgList() throws IOException
     {
-
         JsonConfig cfg = new JsonConfig();
         cfg.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor());
         Integer orgId = Integer.valueOf(0);
@@ -216,17 +215,17 @@ public class ManageOrgAction extends BasicAction
     {
         JsonConfig cfg = new JsonConfig();
         cfg.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor());
-        
+
         JSONObject jsonObj = new JSONObject();
         Integer ordInt = null;
-        
+
         if (orgId != null)
         {
             ordInt = Integer.valueOf(orgId);
             BusinessResponse response = orgService.getOrgByOrgId(ordInt);
-            Org org = (Org)response.getAttribute(CommonConstant.RESULT);
-            
-            if(org == null)
+            Org org = (Org) response.getAttribute(CommonConstant.RESULT);
+
+            if (org == null)
             {
                 throw new IvMsgException(IvExceptionCode.RECORD_NOT_EXSIT);
             }
@@ -240,14 +239,14 @@ public class ManageOrgAction extends BasicAction
         {
             jsonObj.put(SUCCESS, false);
         }
-        
+
         super.response.getWriter().write(jsonObj.toString());
     }
-    
+
     public void modifyOrg() throws IOException
     {
         JSONObject jsonObj = new JSONObject();
-        
+
         Org org = new Org();
         RequestParaUtil.getObjParameter(request, org);
         org.setSysId(orgId);
@@ -256,13 +255,94 @@ public class ManageOrgAction extends BasicAction
             orgService.updateOrg(org);
             jsonObj.put(SUCCESS, true);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             jsonObj.put(SUCCESS, false);
         }
         super.response.getWriter().write(jsonObj.toString());
     }
     
+    @SuppressWarnings("unchecked")
+    public void getEasyUITree() throws IOException
+    {
+        Integer parentId = Integer.valueOf(0);
+        if (StringUtils.isNotEmpty(node))
+        {
+            parentId = Integer.valueOf(node);
+        }
+        
+        BusinessResponse businessResponse = orgService.getAllOrgByParentId(parentId);
+        List<Org> orgList = (List<Org>) businessResponse.getAttribute(CommonConstant.RESULT);
+        List<IvOrgTreeVo> optionList = new ArrayList<IvOrgTreeVo>();
+        for (Org org : orgList)
+        {
+            IvOrgTreeVo treeVo = new IvOrgTreeVo();
+            treeVo.setId(org.getSysId());
+            treeVo.setText(org.getOrgName());
+            
+            BusinessResponse countResponse = orgService.getOrgCountByParentId(org.getSysId());
+            Long total = (Long) countResponse.getAttribute(CommonConstant.TOTAL_COUNT);
+            if (total > 0)
+            {
+                treeVo.setState("closed");
+            }
+            else
+            {
+                treeVo.setState("open");
+            }
+            
+            optionList.add(treeVo);
+        }
+        JSONArray jsonArray = JSONArray.fromObject(optionList);
+        super.response.getWriter().write(jsonArray.toString());
+        
+    }
+
+    public void getAllOrgTree() throws IOException
+    {
+        log.info("getAllOrgTree start");
+        Integer parentId = Integer.valueOf(0);
+        if (StringUtils.isNotEmpty(node))
+        {
+            parentId = Integer.valueOf(node);
+        }
+        List<IvOrgTreeVo> optionList = new ArrayList<IvOrgTreeVo>();
+
+        this.getAllOrgTree(optionList, parentId);
+        JSONArray jsonArray = JSONArray.fromObject(optionList);
+        super.response.getWriter().write(jsonArray.toString());
+
+    }
+
+    @SuppressWarnings("unchecked")
+    private void getAllOrgTree(List<IvOrgTreeVo> treeList, Integer orgId)
+    {
+        BusinessResponse businessResponse = orgService.getAllOrgByParentId(orgId);
+        List<Org> orgList = (List<Org>) businessResponse.getAttribute(CommonConstant.RESULT);
+
+        for (Org org : orgList)
+        {
+            IvOrgTreeVo treeVo = new IvOrgTreeVo();
+            treeVo.setId(org.getSysId());
+            treeVo.setText(org.getOrgName());
+
+            BusinessResponse countResponse = orgService.getOrgCountByParentId(org.getSysId());
+            Long total = (Long) countResponse.getAttribute(CommonConstant.TOTAL_COUNT);
+            if (total > 0)
+            {
+                List<IvOrgTreeVo> optionList = new ArrayList<IvOrgTreeVo>();
+                getAllOrgTree(optionList, org.getSysId());
+                treeVo.setChildren(optionList);
+                treeVo.setState("closed");
+                treeList.add(treeVo);
+            }
+            else
+            {
+                treeList.add(treeVo);
+            }
+        }
+    }
+
     public void saveTreePath()
     {
         super.request.getSession().setAttribute(CommonConstant.ORG_TREE_EXPANDED_PATH, treePath);
@@ -328,9 +408,10 @@ public class ManageOrgAction extends BasicAction
     {
         return orgId;
     }
+
     public void setOrgId(Integer orgId)
     {
         this.orgId = orgId;
     }
-    
+
 }

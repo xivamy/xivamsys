@@ -38,6 +38,34 @@
 	<servlet-name>captcha</servlet-name>
     <url-pattern>/authImg</url-pattern>
   </servlet-mapping>
+  
+	<filter>
+	    <filter-name>CacheFilter</filter-name>
+	    <filter-class>com.opensymphony.oscache.web.filter.CacheFilter</filter-class>
+	    <init-param>
+	        <param-name>time</param-name>
+	        <param-value>600</param-value><!-- 单位秒 -->
+	    </init-param>
+	    <init-param>
+	        <param-name>scope</param-name>
+	        <param-value>session</param-value>
+	    </init-param>
+	    <init-param>
+	    	<param-name>ICacheKeyProvider</param-name>
+	    	<param-value>com.xiva.common.IvCacheKeyProvider</param-value>
+	    </init-param>
+	</filter>
+
+	<filter-mapping>
+	    <filter-name>CacheFilter</filter-name>
+	    <url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+  	
+  	<filter-mapping>
+	    <filter-name>CacheFilter</filter-name>
+	    <url-pattern>/user/userInfoList.action</url-pattern>
+	</filter-mapping>
+  
   <filter>
     <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
     <filter-class>
@@ -56,6 +84,12 @@
     <filter-name>struts2</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <jsp-config>
+	<taglib>
+	  <taglib-uri>oscache</taglib-uri>
+	  <taglib-location>/WEB-INF/classes/META-INF/oscache.tld</taglib-location>
+	</taglib>
+  </jsp-config>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
