@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 
 import org.apache.http.HttpHost;
@@ -23,6 +24,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.protocol.HttpContext;
 
+import com.xiva.common.CommonConstant;
 import com.xiva.common.IvExceptionCode;
 import com.xiva.common.bo.IvResponse;
 import com.xiva.exception.IvMsgException;
@@ -40,11 +42,14 @@ public class HttpClientService
 {
 
     private HttpClient httpClient;
+    
+    private boolean isForge;
 
     private HttpClientService()
     {
         httpClient = new DefaultHttpClient();
 
+        
         ((DefaultHttpClient) httpClient).setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy()
         {
             @Override
@@ -64,12 +69,18 @@ public class HttpClientService
     public static HttpClientService getInstance(boolean useHttps)
     {
         HttpClientService service = new HttpClientService();
-
+        
         if (useHttps)
         {
             service.useHttpsRequest();
         }
         service.setTimeout();
+        
+        if ("true".equalsIgnoreCase(ParameterUtil.getPropByKey(CommonConstant.IS_FORGE_IP)))
+        {
+            service.isForge = true;
+        }
+        
         return service;
     }
 
@@ -119,6 +130,10 @@ public class HttpClientService
         HttpResponse httpRes = null;
         try
         {
+            if (isForge)
+            {
+                httpGet.addHeader("x-forwarded-for", this.genarateIp());
+            }
             httpRes = httpClient.execute(httpGet);
             ivResponse.setHttpRes(httpRes);
         }
@@ -157,6 +172,11 @@ public class HttpClientService
         HttpResponse httpRes = null;
         try
         {
+            if (isForge)
+            {
+                httpPost.addHeader("x-forwarded-for", this.genarateIp());
+            }
+            
             httpRes = httpClient.execute(httpPost);
             ivResponse.setHttpRes(httpRes);
         }
@@ -167,4 +187,25 @@ public class HttpClientService
 
         return ivResponse;
     }
+
+    public void setForge(boolean isForge)
+    {
+        this.isForge = isForge;
+    }
+    
+    private String genarateIp()
+    {
+        String ipStr = "";
+        
+        for (int i=0; i<4; i++)
+        {
+            Random rand = new Random(System.nanoTime());
+            int ipSeg = rand.nextInt(253)+1;
+            ipStr = ipStr + String.valueOf(ipSeg) + ".";
+        }
+        
+        ipStr = ipStr.substring(0, ipStr.length() - 1);
+        return ipStr;
+    }
+    
 }

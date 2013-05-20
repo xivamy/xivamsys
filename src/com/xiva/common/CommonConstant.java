@@ -51,4 +51,8 @@ public class CommonConstant {
     public final static String JSON_TOTAL = "total";
     
     public final static String JSON_DATA = "data";
+    
+    public final static String CRAWLER_FILE_PATH = "crawlerFilePath";
+    
+    public final static String IS_FORGE_IP = "isForgeIP";
 }

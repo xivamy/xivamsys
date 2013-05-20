@@ -21,7 +21,7 @@ public class HttpClientMain
 
     public static void getMethodDemo() throws IOException
     {
-        HttpGet httpget = new HttpGet("http://blog.csdn.net/hbcui1984/article/details/2720204");
+        HttpGet httpget = new HttpGet("http://news.sina.com.cn/china/");
         HttpResponse response = httpClient.execute(httpget);
         HttpEntity entity = response.getEntity();
         if (entity != null)
@@ -35,8 +35,8 @@ public class HttpClientMain
     {
 
     }
-
-    public static void main(String[] args) throws IOException
+    
+    public void baiduTest() throws IOException
     {
         HttpClientService service = HttpClientService.getInstance(false);
         
@@ -44,6 +44,14 @@ public class HttpClientMain
         params.put("key", "%E6%9E%AD%E7%9A%87%E8%AE%BA%E6%88%98%E5%8E%9F%E5%A3%B0%E5%B8%A6+%E9%BB%84%E5%A6%83");
         IvResponse ivResponse = service.httpGetRequest("http://music.baidu.com/search", params);
         System.out.println(EntityUtils.toString(ivResponse.getEntity(), "utf-8"));
+    }
+
+    public static void main(String[] args) throws IOException
+    {
+        HttpClientService service = HttpClientService.getInstance(false);
         
+        IvResponse ivResponse = service.httpPostRequest("http://127.0.0.1:8080/xivamsys/user/login.action?userName=admin&password=123456", null);
+        
+        System.out.println(EntityUtils.toString(ivResponse.getEntity(), "GBK"));
     }
 }

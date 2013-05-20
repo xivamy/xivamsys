@@ -11,6 +11,13 @@
   <listener>
     <listener-class>com.xiva.common.servlet.UserLoginListener</listener-class>
   </listener>
+  
+  <servlet>
+  	<servlet-name>initSys</servlet-name>
+  	<servlet-class>com.xiva.common.servlet.InitSystemServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
   <servlet>
     <servlet-name>uploadFile</servlet-name>
     <servlet-class>com.xiva.common.servlet.UploadFileServlet</servlet-class>

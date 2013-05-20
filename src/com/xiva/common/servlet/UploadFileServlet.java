@@ -25,80 +25,107 @@ import com.xiva.common.util.ParameterUtil;
 
 /**
  * 上传servlet
+ * 
  * @author xiva
- *
+ * 
  */
-public class UploadFileServlet extends HttpServlet {
+public class UploadFileServlet extends HttpServlet
+{
 
     /**
      * 
      */
     private static final long serialVersionUID = -4189012235755765066L;
-    
+
     private static Log log = LogFactory.getFactory().getInstance(UploadFileServlet.class);
 
     public void init() throws ServletException
     {
     }
-    
+
     public UploadFileServlet()
     {
     }
-    
+
     @SuppressWarnings("unchecked")
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         log.info("doPost start!");
         request.setCharacterEncoding("UTF-8");
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload fileUpload = new ServletFileUpload(factory);
-        try {
+        try
+        {
             List<FileItem> fileList = fileUpload.parseRequest(request);
-            if (fileList != null){
+            if (fileList != null)
+            {
                 int listSize = fileList.size();
                 final String filePath = ParameterUtil.getPropByKey("uploadFilePath");
-                for(int i=0; i<listSize; i++){
+                for (int i = 0; i < listSize; i++)
+                {
                     final FileItem fileItem = fileList.get(i);
-                    //创建线程启动文件上传
-                    Thread thread = new Thread(new Runnable(){
+                    // 创建线程启动文件上传
+                    Thread thread = new Thread(new Runnable()
+                    {
                         public void run()
                         {
                             InputStream is = null;
                             OutputStream os = null;
                             BufferedOutputStream bos = null;
-                            try {
+                            try
+                            {
                                 is = fileItem.getInputStream();
                                 UUID uuid = UUID.randomUUID();
                                 String fileName = uuid.toString() + fileItem.getName();
-                                
+
                                 File file = new File(filePath + fileName);
                                 os = new FileOutputStream(file);
                                 bos = new BufferedOutputStream(os);
                                 byte b[] = new byte[1024];
-                                while(is.read(b) != -1){
+                                while (is.read(b) != -1)
+                                {
                                     bos.write(b);
                                 }
                                 bos.flush();
-                            } catch (IOException e) {
+                            }
+                            catch (IOException e)
+                            {
                                 e.printStackTrace();
-                            } finally{
-                                if (is != null){
-                                    try {
+                            }
+                            finally
+                            {
+                                if (is != null)
+                                {
+                                    try
+                                    {
                                         is.close();
-                                    } catch (IOException e) {
+                                    }
+                                    catch (IOException e)
+                                    {
                                         e.printStackTrace();
-                                    } finally {
-                                        if (os != null){
-                                            try {
+                                    }
+                                    finally
+                                    {
+                                        if (os != null)
+                                        {
+                                            try
+                                            {
                                                 os.close();
-                                            } catch (IOException e) {
+                                            }
+                                            catch (IOException e)
+                                            {
                                                 e.printStackTrace();
-                                            } finally {
-                                                if (bos != null){
-                                                    try {
+                                            }
+                                            finally
+                                            {
+                                                if (bos != null)
+                                                {
+                                                    try
+                                                    {
                                                         bos.close();
-                                                    } catch (IOException e) {
+                                                    }
+                                                    catch (IOException e)
+                                                    {
                                                         e.printStackTrace();
                                                     }
                                                 }
@@ -112,18 +139,19 @@ public class UploadFileServlet extends HttpServlet {
                     thread.start();
                 }
             }
-            
-        } catch (FileUploadException e) {
+
+        }
+        catch (FileUploadException e)
+        {
             e.printStackTrace();
         }
         log.info("doPost end!");
     }
-    
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     }
-    
+
     public void destroy()
     {
         super.destroy();

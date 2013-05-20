@@ -64,7 +64,9 @@ public class IvResponse
     {
         this.httpRes = httpRes;
         HttpEntity entity = httpRes.getEntity();
+        String contentType = entity.getContentType().getValue();
         this.setEntity(entity);
+        this.setContentType(contentType);
     }
     
 }

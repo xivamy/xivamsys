@@ -85,7 +85,7 @@ public class CommonUtil
     public static String getRealIp(HttpServletRequest request)
     {
 
-        String realIp = request.getHeader("X-Forwarded-For");
+        String realIp = request.getHeader("x-forwarded-for");
 
         if (realIp != null)
         {
@@ -102,11 +102,12 @@ public class CommonUtil
         else
         {
             realIp = request.getHeader("Proxy-Client-IP");
-            if ("unknown".equalsIgnoreCase(realIp))
+            
+            if (realIp == null || realIp.length() == 0 || "unknown".equalsIgnoreCase(realIp))
             {
                 realIp = request.getHeader("WL-Proxy-Client-IP");
             }
-            if ("unknown".equalsIgnoreCase(realIp))
+            if (realIp == null || realIp.length() == 0 || "unknown".equalsIgnoreCase(realIp))
             {
                 realIp = request.getRemoteAddr();
             }
