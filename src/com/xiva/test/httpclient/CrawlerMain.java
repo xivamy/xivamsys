@@ -26,11 +26,11 @@ public class CrawlerMain
         String startParse = "<ul class=\"list01 fblue\">";
         String endParse = "</ul>";
         List<String> segList = CrawlerUtil.parseContent(content, startParse, endParse);
-        
+
         List<String> urlList = CrawlerUtil.parseSegments(segList);
         BlockingQueue<String> queue = new LinkedBlockingQueue<String>(128);
-        
-        for (String grabUrl:urlList)
+
+        for (String grabUrl : urlList)
         {
             queue.add(grabUrl);
             if (queue.size() > 20)
@@ -38,12 +38,12 @@ public class CrawlerMain
                 break;
             }
         }
-        
+
         int threadNum = urlList.size() / 5;
         ExecutorService pool = Executors.newFixedThreadPool(threadNum);
         int crawlerNum = queue.size();
         System.out.println();
-        for (int i=0; i<threadNum; i++)
+        for (int i = 0; i < threadNum; i++)
         {
             CrawlerThread thread = new CrawlerThread();
             thread.setQueue(queue);
@@ -51,23 +51,28 @@ public class CrawlerMain
             thread.setContentEnd("<!-- publish_helper_end -->");
             thread.setTitleStart("<title>");
             thread.setTitleEnd("</title>");
-            
+
             pool.execute(thread);
         }
         System.out.println("=========");
-        
-        while(true)
+
+        while (true)
         {
             int restNum = queue.size();
-            
-            BigDecimal restPercent = new BigDecimal((double)restNum/(double)crawlerNum);
+
+            BigDecimal restPercent = new BigDecimal((double) restNum / (double) crawlerNum);
             restPercent.setScale(2, BigDecimal.ROUND_HALF_UP);
+//            DecimalFormat df = new DecimalFormat("#.00");
+//            df.format(restPercent.doubleValue());
+//            NumberFormat nf = NumberFormat.getNumberInstance();
+//            nf.setMaximumFractionDigits(2);
+//            System.out.println(nf.format(restPercent.doubleValue()));
             
             System.out.println("剩余百分比:" + String.format("%.2f", restPercent.doubleValue()));
-            if ( restNum == 0)
+            if (restNum == 0)
             {
                 pool.shutdown();
-                while(!pool.isTerminated())
+                while (!pool.isTerminated())
                 {
                     System.out.println("====Wait pool Terminated=====");
                     try
@@ -79,7 +84,7 @@ public class CrawlerMain
                         e.printStackTrace();
                     }
                 }
-                
+
                 System.out.println("====Shutdown=====");
                 break;
             }
