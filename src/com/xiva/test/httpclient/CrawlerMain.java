@@ -1,8 +1,11 @@
 package com.xiva.test.httpclient;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -36,30 +39,48 @@ public class CrawlerMain
             }
         }
         
-        CrawlerThread thread = new CrawlerThread();
-        thread.setQueue(queue);
-        thread.setContentStart("<!-- 正文内容 begin -->");
-        thread.setContentEnd("<!-- publish_helper_end -->");
-        thread.setTitleStart("<title>");
-        thread.setTitleEnd("</title>");
-        
         int threadNum = urlList.size() / 5;
-        Thread[] threads = new Thread[threadNum];
-        
-        System.out.println(queue.size());
+        ExecutorService pool = Executors.newFixedThreadPool(threadNum);
+        int crawlerNum = queue.size();
+        System.out.println();
         for (int i=0; i<threadNum; i++)
         {
-            Thread thd = new Thread(thread);
-            threads[i] = thd;
-            thd.start();
+            CrawlerThread thread = new CrawlerThread();
+            thread.setQueue(queue);
+            thread.setContentStart("<!-- 正文内容 begin -->");
+            thread.setContentEnd("<!-- publish_helper_end -->");
+            thread.setTitleStart("<title>");
+            thread.setTitleEnd("</title>");
+            
+            pool.execute(thread);
         }
         System.out.println("=========");
         
         while(true)
         {
-            if (queue.size() == 0)
+            int restNum = queue.size();
+            
+            BigDecimal restPercent = new BigDecimal((double)restNum/(double)crawlerNum);
+            restPercent.setScale(2, BigDecimal.ROUND_HALF_UP);
+            
+            System.out.println("剩余百分比:" + String.format("%.2f", restPercent.doubleValue()));
+            if ( restNum == 0)
             {
-                thread.stopRequest();
+                pool.shutdown();
+                while(!pool.isTerminated())
+                {
+                    System.out.println("====Wait pool Terminated=====");
+                    try
+                    {
+                        TimeUnit.SECONDS.sleep(6);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                
+                System.out.println("====Shutdown=====");
                 break;
             }
             else
@@ -74,7 +95,7 @@ public class CrawlerMain
                 }
             }
         }
-        
+        System.out.println("====End=====");
     }
 
     public static void main(String[] args) throws IOException

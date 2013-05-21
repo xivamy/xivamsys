@@ -75,9 +75,11 @@ public class CrawlerUtil
             output = new FileOutputStream(storeFile);
             InputStream is = ivResponse.getEntity().getContent();
             byte[] bytes = new byte[1024];
-            while (is.read(bytes) > 0)
+            int len = 0;
+            while ((len = is.read(bytes)) != -1)
             {
-                output.write(bytes);
+                output.write(bytes, 0, len);
+                bytes = new byte[1024];
             }
         }
         catch (IllegalStateException e)

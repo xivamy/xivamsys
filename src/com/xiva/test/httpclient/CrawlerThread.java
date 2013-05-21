@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -46,21 +47,31 @@ public class CrawlerThread implements Runnable
         runThread = Thread.currentThread();
         while (true && !stopRequested)
         {
-            String url = "";
+            
+            String url = null;
             try
             {
-                url = queue.take();
+                url = queue.poll(3, TimeUnit.SECONDS);
             }
-            catch (InterruptedException e)
+            catch (InterruptedException e1)
             {
-                Thread.currentThread().interrupt();
+                e1.printStackTrace();
             }
             
             if (StringUtils.isEmpty(url))
             {
                 break;
             }
-            String htmlContent = CrawlerUtil.getFirstHtmlContent(url);
+            String htmlContent = null;
+            try
+            {
+                htmlContent = CrawlerUtil.getFirstHtmlContent(url);
+            }
+            catch(Exception e)
+            {
+                continue;
+            }
+                
 
             List<String> contentList = CrawlerUtil.parseContent(htmlContent, this.contentStart, this.contentEnd);
             List<String> titleList = CrawlerUtil.parseContent(htmlContent, this.titleStart, this.titleEnd);

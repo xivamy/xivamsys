@@ -139,6 +139,7 @@ public class HttpClientService
         }
         catch (Exception e)
         {
+            System.out.println(e.toString());
             throw new IvMsgException(IvExceptionCode.SYS_ERROR);
         }
 
