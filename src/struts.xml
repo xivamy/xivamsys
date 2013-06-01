@@ -146,6 +146,36 @@
         
     </package>
     
+    <package name="res" namespace="/res" extends="json-base">
+    	<action name="getResTree"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="getResTree">
+        </action>
+        
+        <action name="getAllResTree"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="getAllResTree">
+        </action>
+        
+        <action name="resInfoList"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="loadResourceList">
+        </action>
+        
+        <action name="addResInfo"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="addResInfo">
+        </action>
+        
+        <action name="delSelRes"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="delSelRes">
+        </action>
+        
+        <action name="getResInfo"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="getResInfo">
+        </action>
+        
+        <action name="modifyResInfo"  class="com.xiva.action.permission.ManageResourceAction"
+        	method="modifyResInfo">
+        </action>
+        
+    </package>
     
     
 </struts>

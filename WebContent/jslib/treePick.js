@@ -35,7 +35,7 @@ Ext.define('Ext.ux.TreePicker', {
          * Whether the Tab key should select the currently highlighted item. Defaults to `true`.
          */
         selectOnTab: true,
-
+        
         /**
          * @cfg {Number} maxPickerHeight
          * The maximum height of the tree dropdown. Defaults to 300.
@@ -50,11 +50,10 @@ Ext.define('Ext.ux.TreePicker', {
     },
    
     editable: false,
-
+    
     initComponent: function() {
         var me = this;
         me.callParent(arguments);
-
         this.addEvents(
             /**
              * @event select
@@ -64,7 +63,6 @@ Ext.define('Ext.ux.TreePicker', {
              */
             'select'
         );
-
         me.store.on('load', me.onLoad, me);
     },
 
@@ -232,7 +230,6 @@ Ext.define('Ext.ux.TreePicker', {
             
         // try to find a record in the store that matches the value
         record = value ? me.store.getNodeById(value) : me.store.getRootNode();
-
         // set the raw value to the record's display field if a record was found
         me.setRawValue(record ? record.get(this.displayField) : '');
 

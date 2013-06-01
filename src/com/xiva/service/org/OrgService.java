@@ -6,19 +6,19 @@ import com.xiva.service.bo.Page;
 
 public interface OrgService {
     
-    public BusinessResponse getAllOrgByPage(Page page);
+    BusinessResponse getAllOrgByPage(Page page);
     
-    public BusinessResponse getAllOrgByParentId(Integer parentId);
+    BusinessResponse getAllOrgByParentId(Integer parentId);
     
-    public BusinessResponse getOrgCountByParentId(Integer parentId);
+    BusinessResponse getOrgCountByParentId(Integer parentId);
     
-    public BusinessResponse findOrgByPIdPage(Page page, Integer parentId);
+    BusinessResponse findOrgByPIdPage(Page page, Integer parentId);
     
-    public BusinessResponse getOrgByOrgId(Integer orgId);
+    BusinessResponse getOrgByOrgId(Integer orgId);
     
-    public void saveOrg(Org org);
+    void saveOrg(Org org);
     
-    public void delOrg(Integer[] orgIds);
+    void delOrg(Integer[] orgIds);
     
-    public void updateOrg(Org org);
+    void updateOrg(Org org);
 }

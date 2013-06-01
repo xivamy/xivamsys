@@ -13,6 +13,14 @@ import org.apache.commons.lang.StringUtils;
 import com.xiva.common.CommonConstant;
 import com.xiva.common.util.ParameterUtil;
 
+/**
+ * 
+ * 采集线程类
+ * @author xiva
+ * @version [版本号, 2013-5-22]
+ * @see [相关类/方法]
+ * @since [产品、模块版本]
+ */
 public class CrawlerThread implements Runnable
 {
 
@@ -26,31 +34,25 @@ public class CrawlerThread implements Runnable
 
     private String titleEnd;
 
-    private volatile boolean stopRequested;
-
-    private Thread runThread;
-
     public CrawlerThread()
     {
-        stopRequested = false;
     }
 
     public CrawlerThread(BlockingQueue<String> queue)
     {
         this.queue = queue;
-        stopRequested = false;
     }
 
     @Override
     public void run()
     {
-        runThread = Thread.currentThread();
-        while (true && !stopRequested)
+        while (true)
         {
             
             String url = null;
             try
             {
+                // 3秒内没有数据，则跳出循环
                 url = queue.poll(3, TimeUnit.SECONDS);
             }
             catch (InterruptedException e1)
@@ -71,20 +73,22 @@ public class CrawlerThread implements Runnable
             {
                 continue;
             }
-                
 
             List<String> contentList = CrawlerUtil.parseContent(htmlContent, this.contentStart, this.contentEnd);
+            System.out.println(htmlContent);
             List<String> titleList = CrawlerUtil.parseContent(htmlContent, this.titleStart, this.titleEnd);
             String title = "";
             if (titleList != null && titleList.size() > 0)
             {
                 title = "<h1>" + titleList.get(0) + "</h1>";
+                
+                title = title.split("|")[0];
             }
 
             for (String content : contentList)
             {
                 int startIdx = content.indexOf("src");
-                if (startIdx > 0)
+                while (startIdx > 0)
                 {
                     int srcIdx = content.indexOf("\"", startIdx);
                     int srcEndIdx = 0;
@@ -96,10 +100,21 @@ public class CrawlerThread implements Runnable
                     else
                     {
                         srcEndIdx = content.indexOf("\"", srcIdx + 1);
+                        startIdx = content.indexOf("src", srcEndIdx);
                     }
+                    
+                    if (srcEndIdx < srcIdx)
+                    {
+                        break;
+                    }
+                    
                     String scrUrl = content.substring(srcIdx + 1, srcEndIdx);
-                    String srcPath = CrawlerUtil.downLoadPicture(scrUrl);
-                    content = content.replaceAll(scrUrl, srcPath);
+                    if (scrUrl.endsWith("jpg"))
+                    {
+                        String srcPath = CrawlerUtil.downLoadSCR(scrUrl);
+                        content = content.replaceAll(scrUrl, srcPath);
+                    }
+                    
                 }
 
                 String path = ParameterUtil.getPropByKey(CommonConstant.CRAWLER_FILE_PATH);
@@ -143,12 +158,4 @@ public class CrawlerThread implements Runnable
         this.titleEnd = titleEnd;
     }
 
-    public void stopRequest()
-    {
-        stopRequested = true;
-        if (runThread != null)
-        {
-            runThread.interrupt();
-        }
-    }
 }

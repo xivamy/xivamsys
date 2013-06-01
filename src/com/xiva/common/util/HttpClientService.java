@@ -123,6 +123,7 @@ public class HttpClientService
         }
         catch (URISyntaxException e1)
         {
+            System.out.println(url);
             throw new IvMsgException(IvExceptionCode.SYS_ERROR);
         }
 

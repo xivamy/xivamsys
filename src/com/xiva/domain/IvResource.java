@@ -21,10 +21,10 @@ public class IvResource extends BaseEntity
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Resource_Id")
-    private String resourceId;
+    private Integer resourceId;
 
     @Column(name = "Resource_Type")
-    private String resourceType;
+    private Integer resourceType;
 
     @Column(name = "resource_name")
     private String resourceName;
@@ -36,7 +36,7 @@ public class IvResource extends BaseEntity
     private String resourceDesc;
 
     @Column(name = "resource_pid")
-    private String resourcePid;
+    private Integer resourcePid;
 
     private String reserve1;
 
@@ -44,22 +44,22 @@ public class IvResource extends BaseEntity
 
     private String reserve3;
 
-    public String getResourceId()
+    public Integer getResourceId()
     {
         return resourceId;
     }
 
-    public void setResourceId(String resourceId)
+    public void setResourceId(Integer resourceId)
     {
         this.resourceId = resourceId;
     }
 
-    public String getResourceType()
+    public Integer getResourceType()
     {
         return resourceType;
     }
 
-    public void setResourceType(String resourceType)
+    public void setResourceType(Integer resourceType)
     {
         this.resourceType = resourceType;
     }
@@ -94,12 +94,12 @@ public class IvResource extends BaseEntity
         this.resourceDesc = resourceDesc;
     }
 
-    public String getResourcePid()
+    public Integer getResourcePid()
     {
         return resourcePid;
     }
 
-    public void setResourcePid(String resourcePid)
+    public void setResourcePid(Integer resourcePid)
     {
         this.resourcePid = resourcePid;
     }

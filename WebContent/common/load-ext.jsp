@@ -3,5 +3,3 @@
 	Ext.namespace("xiva");
 	xiva.webContextRoot="<%=request.getContextPath()%>";
 </script>
-
-<script type="text/javascript" src="<%=request.getContextPath()%>/common/common.js"></script> 

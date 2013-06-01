@@ -16,6 +16,14 @@ import com.xiva.common.bo.IvResponse;
 import com.xiva.common.util.HttpClientService;
 import com.xiva.common.util.ParameterUtil;
 
+/**
+ * 
+ * 数据采集相关工具类
+ * @author xiva
+ * @version [版本号, 2013-5-22]
+ * @see [相关类/方法]
+ * @since [产品、模块版本]
+ */
 public class CrawlerUtil
 {
     public static String getFirstHtmlContent(String url)
@@ -41,7 +49,6 @@ public class CrawlerUtil
         return content;
     }
     
-    
     public static List<String> parseContent(String content, String startParse, String endParse)
     {
         List<String> segments = new ArrayList<String>(32);
@@ -50,6 +57,10 @@ public class CrawlerUtil
         while (startIdx > 0)
         {
             int endIdx = content.indexOf(endParse, startIdx);
+            if (endIdx < startIdx)
+            {
+                break;
+            }
             String seg = content.substring(startIdx + startParse.length(), endIdx);
             segments.add(seg);
             startIdx = content.indexOf(startParse, endIdx);
@@ -58,7 +69,7 @@ public class CrawlerUtil
         return segments;
     }
     
-    public static String downLoadPicture(String url)
+    public static String downLoadSCR(String url)
     {
         HttpClientService service = HttpClientService.getInstance(false);
         IvResponse ivResponse = service.httpGetRequest(url, null);
@@ -147,6 +158,6 @@ public class CrawlerUtil
     public static void main(String[] args)
     {
         String url = "http://i2.sinaimg.cn/dy/c/2013-05-20/U6074P1T1D27168006F21DT20130520014311.jpg";
-        downLoadPicture(url);
+        downLoadSCR(url);
     }
 }

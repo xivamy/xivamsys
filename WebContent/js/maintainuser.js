@@ -11,6 +11,17 @@ Com.xiva.user.userStore = null;
 Com.xiva.user.userGrid = null;
 Com.xiva.user.addUserWin = null;
 
+
+Ext.define('com.xiva.userStatus.comboxDataModel',{
+    extend: 'Ext.data.Model',
+    fields: [
+        //第一个字段需要指定mapping，其他字段，可以省略掉。
+        {name:'statuskey', mapping:'statuskey'},
+         'statusdes'
+    ]
+});
+
+
 Com.xiva.user.toolBar = {
 	
 	init : function(){
@@ -40,7 +51,7 @@ Com.xiva.user.toolBar = {
 			comPicker.getRootNode().expand(true);
 			comPicker.getRootNode().collapseChildren(true);
 			
-	        if (type == 1)
+	        if (formStatus == 1)
 	    	{
 	        	var selModel = userGrid.getSelectionModel();
 	    		var selectData = selModel.getSelection();
@@ -108,15 +119,6 @@ Com.xiva.user.toolBar = {
 	    	win.setTitle(title);
 	        win.show();
 	    };
-	    
-	    Ext.define('com.xiva.userStatus.comboxDataModel',{
-	        extend: 'Ext.data.Model',
-	        fields: [
-	            //第一个字段需要指定mapping，其他字段，可以省略掉。
-	            {name:'statuskey', mapping:'statuskey'},
-	             'statusdes'
-	        ]
-	    });
 		
 		var userStatusComStore = Ext.create('Ext.data.Store', {
 			
@@ -219,7 +221,6 @@ Com.xiva.user.toolBar = {
 	                emptyText: '请选择一个日期...',
 	                allowBlank: false
 	            }],
-
 	            buttons: [{
 	                text: '提交',
 	                handler: function() {
@@ -235,7 +236,7 @@ Com.xiva.user.toolBar = {
 	                            	success : function(form, action) {
 	                    					Com.xiva.user.userGrid.getStore().reload();
 	                            			win.hide();
-	                            			editUserForm.reset();
+	                            			editUserForm.getForm().reset();
 	                    			}
 	                            });
 	                    	}
@@ -413,7 +414,10 @@ Com.xiva.user.toolBar = {
 		        xtype: 'button',
 		        text: '删除',
 		        iconCls : 'btnIconDel',
-		        handler: delUser
+		        handler:   function()
+		        {
+		    		Ext.MessageBox.confirm('提示', '是否删除所选记录?', delUser);
+		    	}
 		    },{
 		        xtype: 'button',
 		        text: '导出',

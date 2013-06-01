@@ -11,10 +11,18 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * 
+ * 测试主线程
+ * @author xiva
+ * @version [版本号, 2013-5-22]
+ * @see [相关类/方法]
+ * @since [产品、模块版本]
+ */
 public class CrawlerMain
 {
 
-    public static String url = "http://news.sina.com.cn/china/";
+    public static String gloabUrl = "http://news.sina.com.cn/china/";
 
     public static void startGrab(String url)
     {
@@ -33,7 +41,7 @@ public class CrawlerMain
         for (String grabUrl : urlList)
         {
             queue.add(grabUrl);
-            if (queue.size() > 20)
+            if (queue.size() > 2)
             {
                 break;
             }

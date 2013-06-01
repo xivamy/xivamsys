@@ -222,8 +222,8 @@ Ext.onReady(function() {
 
 	
 	var authorityTree = Ext.create('Ext.tree.Panel',{ 
-	    minWidth: 135,
-	    maxWidth: 200,
+	    minWidth: 200,
+	    maxWidth: 320,
 	    border : false,
 	    rootVisible: false,
 	    store : Ext.create('Ext.data.TreeStore', {
@@ -232,16 +232,20 @@ Ext.onReady(function() {
 	        	rootVisible : false,
 				expanded : true,
 				children : [ {
-					id : '1',
+					id : '8',
 					text : "系统资源管理",
-					url:xiva.webContextRoot+'/iv_service/maintainuser.jsp',
+					url:xiva.webContextRoot+'/iv_service/mantainRes/jsp/maintainResr.jsp',
+					leaf : true
+				},{
+					id : '9',
+					text : "角色管理",
+					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
 					leaf : true
 				}]
 			}
 	    }),
 	    listeners : {
 			'itemclick' : function(view,re){
-				
 				if (re.data.leaf != true) {
 					return;
 				}
