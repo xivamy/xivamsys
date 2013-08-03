@@ -21,20 +21,23 @@ public class IvRole extends BaseEntity
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
-    private String roleId;
-
+    private Integer roleId;
+    
+    @Column(name = "role_parent_id")
+    private Integer rolePId;
+    
     @Column(name = "role_name")
     private String roleName;
 
     @Column(name = "role_desc")
     private String roleDesc;
 
-    public String getRoleId()
+    public Integer getRoleId()
     {
         return roleId;
     }
 
-    public void setRoleId(String roleId)
+    public void setRoleId(Integer roleId)
     {
         this.roleId = roleId;
     }
@@ -57,6 +60,16 @@ public class IvRole extends BaseEntity
     public void setRoleDesc(String roleDesc)
     {
         this.roleDesc = roleDesc;
+    }
+
+    public Integer getRolePId()
+    {
+        return rolePId;
+    }
+
+    public void setRolePId(Integer rolePId)
+    {
+        this.rolePId = rolePId;
     }
 
 }

@@ -1,0 +1,12 @@
+<chart yAxisName='Sales Figure' caption='Top 5 Sales Person'
+	numberPrefix='$' useRoundEdges='1' bgColor='FFFFFF,FFFFFF' showBorder='0'
+	exportEnabled='1' exportAtClient='0' exportHandler='fcExporter1' exportAction='save'
+	exportDialogMessage='正在生成,请稍候...' 
+	exportFormats='JPG=生成JPG图片|PDF=生成PDF文件'
+	exportCallBack="myFN">
+	<set label='Alex' value='25000' />
+	<set label='Mark' value='35000' />
+	<set label='David' value='42300' />
+	<set label='Graham' value='35300' />
+	<set label='John' value='31300' />
+</chart>

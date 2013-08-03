@@ -181,12 +181,13 @@ public class HttpClientService
             
             httpRes = httpClient.execute(httpPost);
             ivResponse.setHttpRes(httpRes);
+            httpPost.releaseConnection();
+            httpClient.getConnectionManager().closeExpiredConnections();
         }
         catch (Exception e)
         {
             throw new IvMsgException(IvExceptionCode.SYS_ERROR);
         }
-
         return ivResponse;
     }
 

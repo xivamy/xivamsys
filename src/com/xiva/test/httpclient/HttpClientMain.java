@@ -17,6 +17,8 @@ import com.xiva.common.util.HttpClientService;
 public class HttpClientMain
 {
 
+    private static int voteNum = 0;
+    
     private static HttpClient httpClient = new DefaultHttpClient();
 
     public static void getMethodDemo() throws IOException
@@ -48,10 +50,32 @@ public class HttpClientMain
 
     public static void main(String[] args) throws IOException
     {
-        HttpClientService service = HttpClientService.getInstance(false);
+        for(int i=0; i<800; i++)
+        {
+            new Thread(new Runnable(){
+                @Override
+                public void run()
+                {
+                    for(int i=0; i<20000; i++)
+                    {
+                        try
+                        {
+                            HttpClientService service = HttpClientService.getInstance(false);
+                            IvResponse ivResponse = service.httpPostRequest("http://sports.sina.cn/?sa=t12d76863v18&&sid=101&vt=4&survey=12p12622s2", null);
+                            System.out.println(voteNum + ":" + ivResponse.getResponseCode());
+                        }
+                        catch(Exception e)
+                        {
+                            System.out.println("Error");
+                            continue;
+                        }
+                        voteNum++;
+                    }
+                    
+                }
+            }).start();
+        }
         
-        IvResponse ivResponse = service.httpPostRequest("http://127.0.0.1:8080/xivamsys/user/login.action?userName=admin&password=123456", null);
-        
-        System.out.println(EntityUtils.toString(ivResponse.getEntity(), "GBK"));
+//        System.out.println(EntityUtils.toString(ivResponse.getEntity(), "GBK"));
     }
 }

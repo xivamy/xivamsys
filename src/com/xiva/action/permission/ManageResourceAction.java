@@ -221,7 +221,7 @@ public class ManageResourceAction extends BasicAction
         res.setResourceType(resource.getResourceType());
         res.setResourceUrl(resource.getResourceUrl());
         res.setResourcePid(resource.getResourcePid());
-        
+        res.setResourceCode(resource.getResourceCode());
         try
         {
             resService.modifyResInfo(res);

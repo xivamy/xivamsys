@@ -241,6 +241,26 @@ Ext.onReady(function() {
 					text : "角色管理",
 					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
 					leaf : true
+				},{
+					id : '10',
+					text : "角色资源管理",
+					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
+					leaf : true
+				},{
+					id : '11',
+					text : "角色用户管理",
+					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
+					leaf : true
+				},{
+					id : '12',
+					text : "角色组织管理",
+					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
+					leaf : true
+				},{
+					id : '13',
+					text : "资源用户管理",
+					url:xiva.webContextRoot+'/iv_service/mantainRole/jsp/maintainRole.jsp',
+					leaf : true
 				}]
 			}
 	    }),
@@ -274,7 +294,7 @@ Ext.onReady(function() {
 				items : [tb, {
 							region : 'west',
 							id : 'west-panel',
-							title : '功能列表',
+							title : '系统-功能列表',
 							split : true,
 							width : 280,
 							minSize : 175,

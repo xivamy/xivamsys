@@ -59,12 +59,14 @@ Com.xiva.res.toolBar = {
 						callback : function(options,success,response){
 							resObj = Ext.JSON.decode(response.responseText);
 							var resNameFiled = editResForm.getForm().findField('resourceName');
+							var resCodeFiled = editResForm.getForm().findField('resourceCode');
 							var resTypeFiled = editResForm.getForm().findField('resourceType');
 							var resUrlFiled = editResForm.getForm().findField('resourceUrl');
 							var resDescFiled = editResForm.getForm().findField('resourceDesc');
 							var resPidFiled = editResForm.getForm().findField('resourcePid');
 							
 							resNameFiled.setValue(resObj.resourceName);
+							resCodeFiled.setValue(resObj.resourceCode);
 							resTypeFiled.setValue(resObj.resourceType + '');
 							resUrlFiled.setValue(resObj.resourceUrl);
 							resDescFiled.setValue(resObj.resourceDesc);
@@ -154,6 +156,13 @@ Com.xiva.res.toolBar = {
 	                afterLabelTextTpl: required,
 	                allowBlank: false
 	            },{
+	                xtype: 'textfield',
+	                name : 'resourceCode',
+	                id : 'resourceCode',
+	                fieldLabel: '资源名称',
+	                afterLabelTextTpl: required,
+	                allowBlank: false
+	            },{
 	                xtype: 'combobox',
 	                name : 'resourceType',
 	                id : 'resourceType',
@@ -219,6 +228,7 @@ Com.xiva.res.toolBar = {
 	                    	{
 	                    		
 	                    		var resNameFiled = editResForm.getForm().findField('resourceName');
+	                    		var resCodeFiled = editResForm.getForm().findField('resourceCode');
 								var resTypeFiled = editResForm.getForm().findField('resourceType');
 								var resUrlFiled = editResForm.getForm().findField('resourceUrl');
 								var resDescFiled = editResForm.getForm().findField('resourceDesc');
@@ -227,6 +237,7 @@ Com.xiva.res.toolBar = {
 	    						var params = {
 	    								'resource.resourceId' : Com.xiva.res.selResId,
 	    								'resource.resourceName' : resNameFiled.getValue(),
+	    								'resource.resourceCode' : resCodeFiled.getValue(),
 	    								'resource.resourceType' : resTypeFiled.getValue(),
 	    								'resource.resourceUrl' : resUrlFiled.getValue(),
 	    								'resource.resourceDesc' : resDescFiled.getValue(),
@@ -422,6 +433,7 @@ Com.xiva.res.gridPanel = {
 	            {name:'resId', mapping:'resourceId'},
 	             'resourceType',
 	             'resourceName',
+	             'resourceCode',
 	             'resourceUrl',
 	             'resourceDesc',
 	             'resourcePid'
@@ -458,6 +470,7 @@ Com.xiva.res.gridPanel = {
 	        columns: [
 	            {text: "资源ID", width: 75, dataIndex: 'resId', sortable: false},
 	            {text: "资源名称", width: 120, dataIndex: 'resourceName', sortable: false},
+	            {text: "资源代码", width: 120, dataIndex: 'resourceCode', sortable: false},
 	            {text: "资源类型", width: 120, dataIndex: 'resourceType',
 	                renderer: function(val){
 	            		var value = null;

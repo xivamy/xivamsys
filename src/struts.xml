@@ -178,4 +178,11 @@
     </package>
     
     
+    <package name="role" namespace="/role" extends="json-base">
+    	<action name="roleInfoList"  class="com.xiva.action.role.ManageRoleAction"
+        	method="roleInfoList">
+        </action>
+        
+    </package>
+    
 </struts>

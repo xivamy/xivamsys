@@ -67,6 +67,7 @@ public class IvResponse
         String contentType = entity.getContentType().getValue();
         this.setEntity(entity);
         this.setContentType(contentType);
+        this.setResponseCode(String.valueOf(httpRes.getStatusLine().getStatusCode()));
     }
     
 }

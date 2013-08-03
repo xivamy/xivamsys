@@ -28,6 +28,9 @@ public class IvResource extends BaseEntity
 
     @Column(name = "resource_name")
     private String resourceName;
+    
+    @Column(name = "resource_code")
+    private String resourceCode;
 
     @Column(name = "resource_url")
     private String resourceUrl;
@@ -72,6 +75,16 @@ public class IvResource extends BaseEntity
     public void setResourceName(String resourceName)
     {
         this.resourceName = resourceName;
+    }
+
+    public String getResourceCode()
+    {
+        return resourceCode;
+    }
+
+    public void setResourceCode(String resourceCode)
+    {
+        this.resourceCode = resourceCode;
     }
 
     public String getResourceUrl()
